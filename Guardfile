@@ -68,6 +68,15 @@ guard :minitest, spring: true, all_on_start: false do
   end
 end
 
+# Returns the integration tests corresponding to the given resource.
+def integration_tests(resource = :all)
+  if resource == :all
+    Dir["test/integration/*"]
+  else
+    Dir["test/integration/#{resource}_*.rb"]
+  end
+end
+
 # Returns the controller tests corresponding to the given resource.
 def controller_test(resource)
   "test/controllers/#{resource}_controller_test.rb"
@@ -77,3 +86,4 @@ end
 def resource_tests(resource)
   integration_tests(resource) << controller_test(resource)
 end
+
