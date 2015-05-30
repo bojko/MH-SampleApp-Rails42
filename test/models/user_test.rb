@@ -55,15 +55,15 @@ class UserTest < ActiveSupport::TestCase
   test 'email addresses must be unique' do
     duplicate = @user.dup
     duplicate.email = @user.email.upcase
-    @user.save!
+    @user.save!     # Must succeed
     assert_not duplicate.valid?
   end
 
   test 'email addresses should be downcased on save' do
     mixed_address = "fOo2gTfR@bar.com"
     @user.email = mixed_address
-    @user.save!
-    assert_equal mixed_address.downcase, @user.reload.email    # I'm sure this ought to work
+    @user.save!     # Must succeed
+    assert_equal mixed_address.downcase, @user.reload.email
   end
 
 # PASSWORDS
