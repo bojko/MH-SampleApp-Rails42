@@ -13,7 +13,7 @@ class SessionsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'title', "Log in | #{@base_title}"
     assert_select 'form'
-    assert_select 'form input', 4   # email, password, CSRF token, Submit
+    assert_select 'form input', 6   # UTF8 thing, email, password, remember me, CSRF token, Submit
   end
 
   # test 'invalid log-in' do
