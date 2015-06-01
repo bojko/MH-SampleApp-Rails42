@@ -44,6 +44,12 @@ module SessionsHelper
     end
   end
 
+  # Return whether the given user is the current user
+
+  def current_user?(user)
+    current_user == user
+  end
+
   # Return whether anyone's logged in
 
   def logged_in?
