@@ -15,13 +15,4 @@ class SessionsControllerTest < ActionController::TestCase
     assert_select 'form'
     assert_select 'form input', 6   # UTF8 thing, email, password, remember me, CSRF token, Submit
   end
-
-  # test 'invalid log-in' do
-  #   @user.save!
-  #   get :new
-  #   post login_path, session: { email: 'user.nowhere', password: 'foobar' }
-
-  #   assert_template 'sessions/new'
-  #   assert_select 'alert-danger'
-  # end
 end
