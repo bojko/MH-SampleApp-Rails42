@@ -57,4 +57,7 @@ group :production do
   gem 'puma',           '2.11.1'
 end
 
-gem 'faker', '1.4.2'
+gem 'faker',                    '1.4.2'
+gem 'will_paginate',            '3.0.7'
+gem 'bootstrap-will_paginate',  '0.0.10'
+
