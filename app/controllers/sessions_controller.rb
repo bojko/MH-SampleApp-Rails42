@@ -6,9 +6,15 @@ class SessionsController < ApplicationController
     session = params[:session]
     user = User.find_by(email: session[:email].downcase)
     if user && user.authenticate(session[:password])
-      log_in user
-      session[:remember_me] == '1' ? remember(user) : forget(user)
-      redirect_back_or user
+      if user.activated?
+        log_in user
+        session[:remember_me] == '1' ? remember(user) : forget(user)
+        redirect_back_or user
+      else
+        message = "Account not activated. Check your email for the activation link"
+        flash[:warning] = message
+        redirect_to root_url
+      end
     else
       flash.now[:danger] = "Invalid email address or password"
       render 'new'
