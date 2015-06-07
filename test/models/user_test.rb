@@ -10,7 +10,7 @@ class UserTest < ActiveSupport::TestCase
     assert @user.valid?
   end
 
-# NAME
+# Name
 
   test 'name must be present' do
     @user.name = '   '
@@ -22,7 +22,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
-# EMAIL
+# Email
 
   test 'email must be present' do
     @user.email = '   '
@@ -66,7 +66,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal mixed_address.downcase, @user.reload.email
   end
 
-# PASSWORDS
+# Passwords
 
   test 'password must be present' do
     @user.password = @user.password_confirmation = ' ' * 6
@@ -80,5 +80,15 @@ class UserTest < ActiveSupport::TestCase
 
   test 'authenticated? should return false for a user with a nil digest' do
     assert_not @user.authenticated?(:remember, '')
+  end
+
+# Microposts
+
+  test 'associated microposts should be deleted with a user' do
+    @user.save
+    @user.microposts.create!(content: 'Lorem etc')
+    assert_difference 'Micropost.count', -1 do
+      @user.destroy
+    end
   end
 end
