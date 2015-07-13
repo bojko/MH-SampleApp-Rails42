@@ -20,7 +20,8 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true, length: { maximum: 50 }
 
-  VALID_EMAIL = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i  # Pragmatic, not exhaustive
+  # This Regex is Pragmatic, not exhaustive, and importantly, case-INsensitive.
+  VALID_EMAIL = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
   validates :email,
     presence: true,
@@ -109,14 +110,14 @@ class User < ActiveRecord::Base
 
   private
 
-  # Downcase the email address
-  def downcase_email
-    self.email.downcase!
-  end
+    # Downcase the email address
+    def downcase_email
+      self.email.downcase!
+    end
 
-  # Create and assign the activation token and digest
-  def create_activation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest activation_token
-  end
+    # Create and assign the activation token and digest
+    def create_activation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest activation_token
+    end
 end
