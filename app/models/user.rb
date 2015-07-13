@@ -32,16 +32,18 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
-  # Returns the hash digest of the given string
-  def self.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
-    BCrypt::Password.create(string, cost: cost)
-  end
+  class << self
+    # Returns the hash digest of the given string
+    def digest(string)
+      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                    BCrypt::Engine.cost
+      BCrypt::Password.create(string, cost: cost)
+    end
 
-  # Creates a new remembral token
-  def self.new_token
-    SecureRandom.urlsafe_base64
+    # Creates a new remembral token
+    def new_token
+      SecureRandom.urlsafe_base64
+    end
   end
 
   # Remember a user in the database for use in persistent sessions
@@ -59,6 +61,7 @@ class User < ActiveRecord::Base
   def authenticated?(attribute, token)
     digest = send "#{attribute}_digest"
     return false if digest.nil?
+
     BCrypt::Password.new(digest).is_password? token
   end
 

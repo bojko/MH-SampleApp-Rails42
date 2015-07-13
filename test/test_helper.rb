@@ -32,9 +32,11 @@ class ActiveSupport::TestCase
     end
   end
 
-  # Return whether the current test is an integration one
+  private
 
-  def integration_test?
-    defined? post_via_redirect
-  end
+    # Return whether the current test is an integration one
+
+    def integration_test?
+      defined? post_via_redirect
+    end
 end
