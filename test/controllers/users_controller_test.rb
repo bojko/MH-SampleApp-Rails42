@@ -55,6 +55,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_no_difference 'User.count' do
       delete :destroy, id: @user
     end
+
     assert_redirected_to login_url
   end
 
@@ -63,6 +64,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_no_difference 'User.count' do
       delete :destroy, id: @user
     end
+
     assert_redirected_to root_url
   end
 

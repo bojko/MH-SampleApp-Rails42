@@ -5,11 +5,12 @@ class UsersController < ApplicationController
   before_action :admin_user, only: :destroy
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
 
   def show
     @user = User.find params[:id]
+    redirect_to root_url and return unless @user.activated?
     @microposts = @user.microposts.paginate(page: params[:page])
   end
 
@@ -22,7 +23,7 @@ class UsersController < ApplicationController
 
     if @user.save
       @user.send_activation_email
-      flash[:info] = "Please check your email inbox to activate your account"
+      flash[:info] = "Please check your email inbox to activate your account."
       redirect_to root_url
     else
       render :new
@@ -37,7 +38,7 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
 
     if @user.update_attributes user_params
-      flash[:success] = "Profile Updated"
+      flash[:success] = "Your profile has been updated."
       redirect_to @user
     else
       render :edit
@@ -46,7 +47,7 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "The User has been Deleted"
+    flash[:success] = "The user has been deleted."
     redirect_to users_url
   end
 
